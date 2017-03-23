@@ -51,10 +51,11 @@ Build and run
 
 
 > The app will connect to the two clusters and print for as longs as messages are coming:
->      > clusterTwo is still available!
->      > clusterOne is still available!
->      > clusterOne is still available!
->      > clusterTwo is still available!
+>
+>      clusterTwo is still available!
+>      clusterOne is still available!
+>      clusterOne is still available!
+>      clusterTwo is still available!
 
 ## Creating a network split
 
