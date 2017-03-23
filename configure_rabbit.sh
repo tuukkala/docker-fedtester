@@ -40,8 +40,6 @@ echo "Start server"
 /usr/sbin/rabbitmq-server -detached
 sleep 20
 
-#rabbitmqctl wait /var/lib/rabbitmq/mnesia/$RABBITMQ_NODENAME\@$HOSTNAME.pid
-
 if [ -z "$CLUSTER_WITH" -o "$CLUSTER_WITH" = "$hostname" ]; then
     echo "Create admin user"    
     if [ -z "$CLUSTER_USER" ]; then
