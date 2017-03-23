@@ -1,0 +1,74 @@
+version: "3"
+
+services:
+  rabbit1:
+    image: rabbitmq-cluster
+    container_name: rabbitmq-cluster1
+    hostname: rabbit1
+    networks:
+      cluster-net:
+        aliases:
+          - rabbit1
+    environment:
+      - ERLANG_COOKIE=abcdefg
+      - CLUSTER_USER=user
+      - CLUSTER_PASSWD=password
+      - VHOST=cluster
+      - UPSTREAM_HOSTS=rabbit3:5672;rabbit4:5672
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+  rabbit2:
+    image: rabbitmq-cluster
+    container_name: rabbitmq-cluster2    
+    hostname: rabbit2
+    networks:
+      cluster-net:
+        aliases:
+          - rabbit2   
+    links:
+      - rabbit1
+    environment:
+      - ERLANG_COOKIE=abcdefg
+      - CLUSTER_WITH=rabbit1
+      - ENABLE_RAM=true
+    ports:
+      - "5673:5672"
+      - "15673:1562"
+  rabbit3:    
+    image: rabbitmq-cluster
+    container_name: rabbitmq-cluster3
+    hostname: rabbit3
+    networks:
+      cluster-net:
+        aliases:
+          - rabbit3
+    environment:
+      - ERLANG_COOKIE=gfedcba
+      - CLUSTER_USER=user
+      - CLUSTER_PASSWD=password
+      - VHOST=cluster
+      - UPSTREAM_HOSTS=rabbit1:5672;rabbit2:5672
+    ports:
+      - "5674:5672"
+      - "15674:15672"
+  rabbit4:
+    image: rabbitmq-cluster
+    container_name: rabbitmq-cluster4    
+    hostname: rabbit4
+    networks:
+      cluster-net:
+        aliases:
+          - rabbit4
+    links:
+      - rabbit3
+    environment:
+      - ERLANG_COOKIE=gfedcba
+      - CLUSTER_WITH=rabbit3
+      - ENABLE_RAM=true
+    ports:
+      - "5675:5672"
+      - "15675:15672"
+      
+networks:
+  cluster-net:
