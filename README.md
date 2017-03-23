@@ -50,7 +50,7 @@ Build and run
 >      > java -cp %CP% ClusterTester localhost:5672,localhost:5673 localhost:5674,localhost:5675 
 
 
-> The app will connect to the two clusters and print for as longs as messages are coming:
+> The app will connect to the two clusters and print for as long as messages are coming:
 >
 >      clusterTwo is still available!
 >      clusterOne is still available!
@@ -68,7 +68,7 @@ The containers are named:
 
 The best way to to get the problem seems to be to block a broker where the app is not connected to. 
 
-Run the this command agains the container you want to block (e.g. rabbitmq-cluster4):
+Run the this command against the container you want to block (e.g. rabbitmq-cluster4):
 > docker exec --privileged rabbitmq-cluster4 bash /usr/local/bin/block_broker.sh -time 15
 
 Repeat untill the test app stops printing either of the cluster is still available messages. To fix the issue you need recreate the
